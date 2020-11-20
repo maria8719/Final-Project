@@ -95,8 +95,8 @@ public class UserAccount{
                           balance= totalBalance.get(i);
                           newBalance = balance+amount;
                           totalBalance.set(i, newBalance);
-                          output=String.format("the amount $%.2f has been deposited.\n"+
-                                                "Yor new balance is $%.2f: \n",amount, newBalance);
+                          output=String.format("the amount of $%.2f has been deposited.\n"+
+                                                "Your new balance is $%.2f: \n",amount, newBalance);
                           JOptionPane.showMessageDialog(null, output);
                              }
                           } 
@@ -124,8 +124,8 @@ public class UserAccount{
                           balance= totalBalance.get(i);
                           newBalance = balance-amount;
                           totalBalance.set(i, newBalance);
-                          output=String.format("the amount $%.2f has been withdrawan.\n"+
-                                                "Yor new balance is $%.2f: \n",amount, newBalance);
+                          output=String.format("the amount of $%.2f has been withdrawan.\n"+
+                                                "Your new balance is $%.2f: \n",amount, newBalance);
                           JOptionPane.showMessageDialog(null, output);
                              }
                           } 
@@ -134,9 +134,7 @@ public class UserAccount{
                        return newBalance;
       }                
     
-    
-    
-    
+        
      //Return username method here
      
     //This is temporary to test the checkBalance method, this will be replaced with the deposit and withdraw methods
@@ -149,10 +147,15 @@ public class UserAccount{
 
     //This method allows for the correct balance to be shown for the corresponding account
     //totalBalance.get(0) == username.get(0) and so on
-    public void checkBalance(){
+    public void checkBalance()
+       {
+            String output;
+      
         for(int i = 0; i < totalBalance.size(); i++){
             if(user.equals(username.get(i)) && pass.equals(password.get(i))){
-                JOptionPane.showMessageDialog(null, totalBalance.get(i));
+               output=String.format("Your account has $%.2f balance", totalBalance.get(i));
+
+                JOptionPane.showMessageDialog(null, output);
             }
         }
         

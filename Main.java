@@ -21,7 +21,7 @@ public class Main {
         boolean isDone = false;
 
         while(isDone != true){
-            JOptionPane.showMessageDialog(null, "welcome to our banking system! Click ok to see our menu");
+            JOptionPane.showMessageDialog(null, "welcome to our banking system! Click OK to see our menu");
             input1=JOptionPane.showInputDialog("Select:\n 1 to create a new account.\n 2 for returning users.\n 3 to exit.");
             userInput = Integer.parseInt(input1);
             if(userInput == 1){
@@ -52,7 +52,7 @@ public class Main {
                         break;
 
                   case 3:
-                      // checkBalance();
+                      ua.checkBalance();
                         break;
 
                   case 0:
