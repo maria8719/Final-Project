@@ -22,7 +22,7 @@ public class Main {
 
         while(isDone != true){
             JOptionPane.showMessageDialog(null, "welcome to our banking system! Click OK to see our menu");
-            input1=JOptionPane.showInputDialog("Select:\n 1 to create a new account.\n 2 for returning users.\n 3 to exit.");
+            input1=JOptionPane.showInputDialog("Select:\n 1 to create a new account.\n 2 to return users.\n 3 to exit.");
             userInput = Integer.parseInt(input1);
             if(userInput == 1){
                 JOptionPane.showMessageDialog(null, "Thank you for choosing us today. Please click OK to get Started.\n");
