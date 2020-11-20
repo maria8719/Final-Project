@@ -16,7 +16,6 @@ public class Main {
         double amount;
         String username;
         String password;
-         boolean quit = false;
         boolean isDone = false;
 
         while(isDone != true){
@@ -50,7 +49,7 @@ public class Main {
                   switch (userChoice) {
                    case 1:
                         ua.deposit();
-                        break;
+                         break;
                  case 2:
                       // Withdraw();                        
                         break;
@@ -60,15 +59,14 @@ public class Main {
                         break;
 
                   case 0:
-                        quit = true;
+                        isDone = true;
                         break;
 
                   default:
                         System.out.println("Wrong choice.");
                         break;
-
                   }}
-                  while (!quit);
+                  while (!isDone);
 }
                   
                    /*else if(userInput==2){

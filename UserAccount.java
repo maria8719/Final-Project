@@ -16,6 +16,9 @@ public class UserAccount{
     String user;
     String pass;
     double n = 0;
+    double amount;
+    double balance=0;
+    double newBalance;
 
 
     public UserAccount(){
@@ -31,6 +34,7 @@ public class UserAccount{
         //adding to an arrayList is simply .add()
         username.add(user);
         password.add(pass);
+        totalBalance.add(0.0);
     }
 
     //   .get allows you to retrieve the value in the arrayList -> same as doing array[2] = "hello"
@@ -73,21 +77,30 @@ public class UserAccount{
     // totalBalance.get(i) will retrieve the value corresponding to the account
 
     //deposit method here
-    public static void deposit()
-     {double amount;
-     double balance=0;
+    public Double deposit()
+     {         
                 Scanner keyboard = new Scanner(System.in);
                 System.out.print("Amount to deposit: ");
                 amount = keyboard.nextDouble();
                if (amount <= 0)
-                   System.out.println("Can't deposit nonpositive amount.");
+                   System.out.println("Can't deposit a negative amount. Please try again! ");
                 else {
-                      balance += amount;
-                      System.out.println("$" + amount + " has been deposited.");
+                      for(int i=0; i<totalBalance.size(); i++ )
+                        {
+                          if(user.equals(username.get(i)) && pass.equals(password.get(i)))
+                            {
 
-                      }
-     }
-                        
+                          balance= totalBalance.get(i);
+                          newBalance = balance+amount;
+                          totalBalance.set(i, newBalance);
+                          System.out.printf("the amount $%.2f has been deposited.\n",amount);
+                          System.out.printf("Yor new balance is $%.2f: \n",newBalance);
+                             }
+                          } 
+                          
+                       }
+                       return newBalance;
+      }                  
 
     //withdraw method here
     /*public static void withdraw(double amount)
