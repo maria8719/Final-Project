@@ -1,6 +1,6 @@
 package com.company;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -8,9 +8,11 @@ public class Main {
 
         //Classes
         com.company.UserAccount ua = new com.company.UserAccount();
-        Scanner kbInput = new Scanner(System.in);
+        //Scanner kbInput = new Scanner(System.in);
 
         //Variables
+        String input1;
+        String input2;
         int userInput;
         int userChoice;
         double amount;
@@ -19,39 +21,34 @@ public class Main {
         boolean isDone = false;
 
         while(isDone != true){
-            System.out.println("Select 1 to create a new account, 2 for returning users, 3 to exit");
-            userInput = kbInput.nextInt();
+            JOptionPane.showMessageDialog(null, "welcome to our banking system! Click ok to see our menu");
+            input1=JOptionPane.showInputDialog("Select:\n 1 to create a new account.\n 2 for returning users.\n 3 to exit.");
+            userInput = Integer.parseInt(input1);
             if(userInput == 1){
-                System.out.println("Thank you for choosing us today" + "\n");
-                System.out.println("Please enter an username that is not taken");
-                username = kbInput.nextLine();
-                System.out.println("\n" + "Please enter a password that is not taken");
-                password = kbInput.nextLine();
+                JOptionPane.showMessageDialog(null, "Thank you for choosing us today. Please click OK to get Started.\n");
+                username=JOptionPane.showInputDialog("Please enter an username that is not taken");
+                password=JOptionPane.showInputDialog("\n" + "Please enter a password that is not taken");
                 ua.getUsers(username, password);
                 ua.setUserAccount();
                 if(ua.checkDuplicateUserAccount()){
                     ua.deleteDuplicates();
-                    System.out.println("Sorry that username or password was taken. Try again.");
+                    JOptionPane.showMessageDialog(null, "Sorry that username or password was taken. Try again.");
                 }
-                    System.out.println("What operation you would like to do?");
+                    
                       do {
 
-                         System.out.println("1. Deposit money");
+                         input2=JOptionPane.showInputDialog("What operation you would like to do?\n"+
+                                                               "1. Deposit money \n"+"2. Withdraw money \n"+
+                                                               "3. Check balance \n" +"0 to quit: \n");
 
-                         System.out.println("2. Withdraw money");
-
-                         System.out.println("3. Check balance");
-
-                         System.out.print("0 to quit: ");
-
-                         userChoice = kbInput.nextInt();
+                          userChoice = Integer.parseInt(input2);
 
                   switch (userChoice) {
                    case 1:
                         ua.deposit();
                          break;
                  case 2:
-                      // Withdraw();                        
+                      ua.withdraw();                        
                         break;
 
                   case 3:
@@ -63,13 +60,13 @@ public class Main {
                         break;
 
                   default:
-                        System.out.println("Wrong choice.");
+                        JOptionPane.showMessageDialog(null,"Wrong choice.");
                         break;
                   }}
                   while (!isDone);
 }
                   
-                   /*else if(userInput==2){
+                   /* else if(userInput==2){
 
                         System.out.println("withdraw method goes here");
 
@@ -81,19 +78,17 @@ public class Main {
                     }
                 }*/
             else if(userInput==2){
-                System.out.println("Please enter your username");
-                username = kbInput.nextLine();
-                System.out.println("\n" + "Please enter your password");
-                password = kbInput.nextLine();
+                username=JOptionPane.showInputDialog("Please enter your username. \n");
+               password= JOptionPane.showInputDialog("Please enter your password");
                 ua.getUsers(username, password);
                 if(ua.checkUserAccount()){
-                    System.out.println("\n" + "Welcome " + username.substring(0,1).toUpperCase() + username.substring(1));
+                    JOptionPane.showMessageDialog(null, "Welcome " + username.substring(0,1).toUpperCase() + username.substring(1));
                     //Structure this block of code similar above in the new account block of code
                 }else{
-                    System.out.println("One of the information above was entered incorrectly. Please try again");
+                    JOptionPane.showMessageDialog(null, "One of the information above was entered incorrectly. Please try again");
                 }
             }else{
-                System.out.println("Thank you for banking with us today.");
+                JOptionPane.showMessageDialog(null, "Thank you for banking with us today.");
                 isDone = true;
 
 }

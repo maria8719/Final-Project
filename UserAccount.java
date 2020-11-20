@@ -1,7 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class UserAccount{
 
@@ -25,9 +25,9 @@ public class UserAccount{
 
     }
 
-    public void getUsers(String un, String p){
-        user = un;
-        pass = p;
+    public void getUsers(String uName, String uPass){
+        user = uName;
+        pass = uPass;
     }
 
     public void setUserAccount(){
@@ -78,12 +78,14 @@ public class UserAccount{
 
     //deposit method here
     public Double deposit()
-     {         
-                Scanner keyboard = new Scanner(System.in);
-                System.out.print("Amount to deposit: ");
-                amount = keyboard.nextDouble();
+     {    
+         String input; 
+         String output;    
+               
+                input=JOptionPane.showInputDialog("Amount to deposit: ");
+                amount = Double.parseDouble(input);
                if (amount <= 0)
-                   System.out.println("Can't deposit a negative amount. Please try again! ");
+                   JOptionPane.showMessageDialog(null,"Can't deposit a negative amount. Please try again! ");
                 else {
                       for(int i=0; i<totalBalance.size(); i++ )
                         {
@@ -93,8 +95,9 @@ public class UserAccount{
                           balance= totalBalance.get(i);
                           newBalance = balance+amount;
                           totalBalance.set(i, newBalance);
-                          System.out.printf("the amount $%.2f has been deposited.\n",amount);
-                          System.out.printf("Yor new balance is $%.2f: \n",newBalance);
+                          output=String.format("the amount $%.2f has been deposited.\n"+
+                                                "Yor new balance is $%.2f: \n",amount, newBalance);
+                          JOptionPane.showMessageDialog(null, output);
                              }
                           } 
                           
@@ -103,35 +106,45 @@ public class UserAccount{
       }                  
 
     //withdraw method here
-    /*public static void withdraw(double amount)
-     {
-     double balance=0;
+     public double withdraw()
+    {    
+         String input; 
+         String output;    
+               
+                input=JOptionPane.showInputDialog("Amount to withdraw: ");
+                amount = Double.parseDouble(input);
+               if (amount <= 0)
+                   JOptionPane.showMessageDialog(null,"Can't withdraw a negative amount. Please try again! ");
+                else {
+                      for(int i=0; i<totalBalance.size(); i++ )
+                        {
+                          if(user.equals(username.get(i)) && pass.equals(password.get(i)))
+                            {
 
-          System.out.print("Amount to withdraw: ");
-
-                        amount = keyboard.nextDouble();
-
-                        if (amount <= 0 || amount > balance)
-
-                             System.out.println("Withdrawal can't be completed.");
-
-                        else {
-
-                             balance -= amount;
-
-                             System.out.println("$" + amount + " has been withdrawn.");
-
-                        }*/
-
-    //Return username method here
-
-
+                          balance= totalBalance.get(i);
+                          newBalance = balance-amount;
+                          totalBalance.set(i, newBalance);
+                          output=String.format("the amount $%.2f has been withdrawan.\n"+
+                                                "Yor new balance is $%.2f: \n",amount, newBalance);
+                          JOptionPane.showMessageDialog(null, output);
+                             }
+                          } 
+                          
+                       }
+                       return newBalance;
+      }                
+    
+    
+    
+    
+     //Return username method here
+     
     //This is temporary to test the checkBalance method, this will be replaced with the deposit and withdraw methods
     public void eee(){
         double num = 100;
         n += num;
         totalBalance.add(n);
-        System.out.println(totalBalance.size());
+        JOptionPane.showMessageDialog(null, totalBalance.size());
     }
 
     //This method allows for the correct balance to be shown for the corresponding account
@@ -139,7 +152,7 @@ public class UserAccount{
     public void checkBalance(){
         for(int i = 0; i < totalBalance.size(); i++){
             if(user.equals(username.get(i)) && pass.equals(password.get(i))){
-                System.out.println(totalBalance.get(i));
+                JOptionPane.showMessageDialog(null, totalBalance.get(i));
             }
         }
         
