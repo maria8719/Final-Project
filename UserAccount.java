@@ -1,9 +1,12 @@
 package com.company;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 public class UserAccount{
+
+    //Scanner object to collect user input
+    Scanner keyboard = new Scanner(System.in);
 
     //ArrayList containing: this will store all usernames and passwords in separate lists
     ArrayList<String> username = new ArrayList<>();
@@ -11,54 +14,42 @@ public class UserAccount{
 
     //ArrayList spot for totalBalance
     ArrayList<Double> totalBalance = new ArrayList<>();
-
+    
+    //  ArrayList containing transcations made by user.
+    ArrayList<String> transactions = new ArrayList<String>();
+   
     //Variables
     String user;
     String pass;
-    double n = 0;
-    double amount;
-    double balance=0;
-    double newBalance;
+    double depositAmount;
+    double withdrawAmount;
+    double userBalance;
 
 
     public UserAccount(){
 
     }
 
-    public void getUsers(String uName, String uPass){
-        user = uName;
-        pass = uPass;
+    public void getUsers(String un, String p){
+        user = un;
+        pass = p;
+    }
+
+    // This checks if an user already exists
+    public boolean checkNewUserAccount(){
+        for(int i = 0; i < username.size(); i++){
+            if(user.equalsIgnoreCase(username.get(i)) || pass.equalsIgnoreCase(password.get(i))){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setUserAccount(){
         //adding to an arrayList is simply .add()
         username.add(user);
         password.add(pass);
-        totalBalance.add(0.0);
-    }
-
-    //   .get allows you to retrieve the value in the arrayList -> same as doing array[2] = "hello"
-    //First time it goes through username.size == 1 meaning it doesn't go through the loop since 1-1 == 0 and 0 isn't less than 0 but equals to
-    //Second time username.size == 2, it will then check against the first index of username and password, to the second index of username and password
-    //For example if the size was five, then it would check username.get(i = 0) against username.get{j = 1,2,3,4), next iteration username.get(i = 1) against username.get(j = 2, 3, 4), and so on
-    //Returns true if either username or password ("||") is the same, false if different
-    public boolean checkDuplicateUserAccount(){
-        for(int i = 0; i < (username.size() - 1); i++){
-            for(int j = i + 1; j < username.size(); j++){
-                if(username.get(i).equalsIgnoreCase(username.get(j)) || password.get(i).equals(password.get(j))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    //If checkUserAccount == true, then it removes the last username and password entered since that one would be the duplicate.
-    public void deleteDuplicates(){
-        if(checkDuplicateUserAccount()){
-            username.remove(username.size() - 1);
-            password.remove(password.size() - 1);
-        }
+        totalBalance.add(0.0); // initialize user account with balance of 0
     }
 
     public boolean checkUserAccount(){
@@ -67,7 +58,6 @@ public class UserAccount{
                 return true;
             }
         }
-
         return false;
     }
 
@@ -77,87 +67,80 @@ public class UserAccount{
     // totalBalance.get(i) will retrieve the value corresponding to the account
 
     //deposit method here
-    public Double deposit()
-     {    
-         String input; 
-         String output;    
-               
-                input=JOptionPane.showInputDialog("Amount to deposit: ");
-                amount = Double.parseDouble(input);
-               if (amount <= 0)
-                   JOptionPane.showMessageDialog(null,"Can't deposit a negative amount. Please try again! ");
-                else {
-                      for(int i=0; i<totalBalance.size(); i++ )
-                        {
-                          if(user.equals(username.get(i)) && pass.equals(password.get(i)))
-                            {
+    public void depositMethod(){
+        for (int i = 0; i < totalBalance.size(); i++) {
+            if (user.equalsIgnoreCase(username.get(i)) && pass.equals(password.get(i))) {
+                userBalance = (totalBalance.get(i));
+                System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your current balance is: $%.2f \n", userBalance);
+                System.out.println("Enter deposit amount: ");
+                depositAmount = keyboard.nextDouble();
 
-                          balance= totalBalance.get(i);
-                          newBalance = balance+amount;
-                          totalBalance.set(i, newBalance);
-                          output=String.format("the amount of $%.2f has been deposited.\n"+
-                                                "Your new balance is $%.2f: \n",amount, newBalance);
-                          JOptionPane.showMessageDialog(null, output);
-                             }
-                          } 
-                          
-                       }
-                       return newBalance;
-      }                  
+                while (depositAmount < 0) {
+                    System.out.println("Enter deposit amount: ");
+                    depositAmount = keyboard.nextDouble();
+                }
+
+                double newBalance = userBalance + depositAmount;
+                totalBalance.set(i, newBalance);
+                System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your new balance is: $%.2f \n", newBalance);
+                transactions.add("Deposit: $" + depositAmount);
+                break; //no point in continuing the loop
+            }
+        }
+    }
+
 
     //withdraw method here
-     public double withdraw()
-    {    
-         String input; 
-         String output;    
-               
-                input=JOptionPane.showInputDialog("Amount to withdraw: ");
-                amount = Double.parseDouble(input);
-               if (amount <= 0)
-                   JOptionPane.showMessageDialog(null,"Can't withdraw a negative amount. Please try again! ");
-                else {
-                      for(int i=0; i<totalBalance.size(); i++ )
-                        {
-                          if(user.equals(username.get(i)) && pass.equals(password.get(i)))
-                            {
+    public void withdrawMethod(){
+            //Find the user account and access totalBalance
+            for (int i = 0; i < totalBalance.size(); i++) {
+                if (user.equalsIgnoreCase(username.get(i)) && pass.equals(password.get(i))) {
+                    userBalance = totalBalance.get(i);
+                    System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your current balance is: $%.2f \n", userBalance);
+                    System.out.println("Enter withdraw amount: ");
+                    withdrawAmount = keyboard.nextDouble();
 
-                          balance= totalBalance.get(i);
-                          newBalance = balance-amount;
-                          totalBalance.set(i, newBalance);
-                          output=String.format("the amount of $%.2f has been withdrawan.\n"+
-                                                "Your new balance is $%.2f: \n",amount, newBalance);
-                          JOptionPane.showMessageDialog(null, output);
-                             }
-                          } 
-                          
-                       }
-                       return newBalance;
-      }                
-    
-        
-     //Return username method here
-     
-    //This is temporary to test the checkBalance method, this will be replaced with the deposit and withdraw methods
-    public void eee(){
-        double num = 100;
-        n += num;
-        totalBalance.add(n);
-        JOptionPane.showMessageDialog(null, totalBalance.size());
-    }
+                    //Checks for negative number and insufficient funds
+                    while (withdrawAmount < 0 || withdrawAmount > userBalance) {
+                        System.out.println("Invalid withdrawal amount." + "\n" + "Enter withdraw amount: ");
+                        withdrawAmount = keyboard.nextDouble();
+                    }
+
+                    //Update user's totalBalance and print information
+                    double newBalance = userBalance - withdrawAmount;
+                    totalBalance.set(i, newBalance);
+                    System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your new balance is: $%.2f \n", newBalance);
+                    transactions.add("Withdrawal: $" + withdrawAmount);
+
+                    break;
+                }
+            }
+        }
 
     //This method allows for the correct balance to be shown for the corresponding account
     //totalBalance.get(0) == username.get(0) and so on
-    public void checkBalance()
-       {
-            String output;
-      
+    public void checkBalance(){
         for(int i = 0; i < totalBalance.size(); i++){
-            if(user.equals(username.get(i)) && pass.equals(password.get(i))){
-               output=String.format("Your account has $%.2f balance", totalBalance.get(i));
-
-                JOptionPane.showMessageDialog(null, output);
+            if(user.equalsIgnoreCase(username.get(i)) && pass.equals(password.get(i))){
+                userBalance = totalBalance.get(i);
+                System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your current balance is: $%.2f \n", userBalance);
+              	transactions.add("Check balance: $" + userBalance);
+                break;
             }
         }
-        
+    }
+
+    // This method prints the history of all transactions made on a specific account.
+
+	public void printLog() 
+    {
+       String userTransactions;
+     System.out.println("Your transactions:");
+      for (int i= 0; i< transactions.size();i++ )
+         {
+            userTransactions = transactions.get(i);
+      System.out.println(userTransactions);
+      
+         }  
     }
 }
