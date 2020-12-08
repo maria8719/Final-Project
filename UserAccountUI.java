@@ -16,9 +16,12 @@ public class UserAccountUI {
         String password;
         boolean isDone = false; // Checks status of program
 
+        //Initial menu asks user to create new account, log in with existing account, or exit
         while(!isDone){
-            System.out.println("Select 1 to create a new account, 2 for returning users, 3 to exit");
-            userInput = kbInput.nextInt();
+            System.out.println("Welcome to our banking system! Please Select a number to continue:\n");
+            System.out.println("1: Create a new account.");
+            System.out.println("2:Return user account.");
+            System.out.println("3:Exit");            userInput = kbInput.nextInt();
             if(userInput == 1){
                 do{
                     System.out.println("Please create a new account below." + "\n");
@@ -34,8 +37,13 @@ public class UserAccountUI {
 
                     useraccount.setUserAccount();
                     while(!isDone){
-                        System.out.println("Thank you for choosing us today, " + username.substring(0,1).toUpperCase() + username.substring(1));
-                        System.out.println("Select 1 to deposit, 2 to withdraw, 3 to check balance, 4 to show transactions history, 5 to quit");
+                        System.out.println("Thank you for choosing us today, " + username.substring(0,1).toUpperCase() + username.substring(1)+"\n");
+                        System.out.println("1:Deposit.");
+                        System.out.println("2:Withdraw");
+                        System.out.println("3:Check balance.");
+                        System.out.println("4:Show transactions history.");
+                        System.out.println("5:Quit");
+
                         userInput = kbInput.nextInt();
                         switch (userInput){
                             case 1:
@@ -49,9 +57,11 @@ public class UserAccountUI {
                             case 3:
                                 useraccount.checkBalance();
                                 break;
+
                             case 4:
-                                useraccount.printLog();
+                                useraccount.transactionHistory();
                                 break;
+
                             default:
                                 System.out.println("Thank you for banking with us today" + "\n" + "\n");
                                 isDone = true;
@@ -69,7 +79,12 @@ public class UserAccountUI {
                 if(useraccount.checkUserAccount()){
                     System.out.println("\n" + "Welcome back, " + username.substring(0,1).toUpperCase() + username.substring(1));
                     while(!isDone){
-                        System.out.println("\n" + "Select 1 to deposit, 2 to withdraw, 3 to check balance, 4 to show transactions history, 5 to exit");
+                       System.out.println("Thank you for choosing us today, " + username.substring(0,1).toUpperCase() + username.substring(1)+"\n");
+                        System.out.println("1:Deposit.");
+                        System.out.println("2:Withdraw");
+                        System.out.println("3:Check balance.");
+                        System.out.println("4:Show transactions history.");
+                        System.out.println("5:Quit");
                         userInput = kbInput.nextInt();
                         switch (userInput){
                             case 1:
@@ -83,9 +98,11 @@ public class UserAccountUI {
                             case 3:
                                 useraccount.checkBalance();
                                 break;
+
                             case 4:
-                                useraccount.printLog();
+                                useraccount.transactionHistory();
                                 break;
+
                             default:
                                 System.out.println("Thank you for banking with us today" + "\n" + "\n");
                                 isDone = true;

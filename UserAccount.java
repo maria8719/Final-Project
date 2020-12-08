@@ -14,10 +14,12 @@ public class UserAccount{
 
     //ArrayList spot for totalBalance
     ArrayList<Double> totalBalance = new ArrayList<>();
-    
-    //  ArrayList containing transcations made by user.
-    ArrayList<String> transactions = new ArrayList<String>();
-   
+
+    //2D ArrayList for transactionHistory
+    ArrayList<ArrayList<String>> transactionHistory = new ArrayList<>();
+    int historyIndex = 0; //used to initialize the first row of ArrayLists when a new account is created
+
+
     //Variables
     String user;
     String pass;
@@ -50,6 +52,13 @@ public class UserAccount{
         username.add(user);
         password.add(pass);
         totalBalance.add(0.0); // initialize user account with balance of 0
+
+        //Initialize each element of transactionHistory ArrayList with another ArrayList
+        for (int i = historyIndex; i < historyIndex + 1; i++){
+            transactionHistory.add(new ArrayList());
+        }
+        transactionHistory.get(historyIndex).add("You created a new account.");
+        historyIndex++;
     }
 
     public boolean checkUserAccount(){
@@ -82,8 +91,8 @@ public class UserAccount{
 
                 double newBalance = userBalance + depositAmount;
                 totalBalance.set(i, newBalance);
+                transactionHistory.get(i).add("You deposited $" + depositAmount);
                 System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your new balance is: $%.2f \n", newBalance);
-                transactions.add("Deposit: $" + depositAmount);
                 break; //no point in continuing the loop
             }
         }
@@ -109,13 +118,23 @@ public class UserAccount{
                     //Update user's totalBalance and print information
                     double newBalance = userBalance - withdrawAmount;
                     totalBalance.set(i, newBalance);
+                    transactionHistory.get(i).add("You withdrew $" + withdrawAmount);
                     System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your new balance is: $%.2f \n", newBalance);
-                    transactions.add("Withdrawal: $" + withdrawAmount);
-
                     break;
                 }
             }
         }
+
+    // The transactionHistory method displays all user transaction history for a SINGLE user
+    public void transactionHistory(){
+        for (int i = 0; i < totalBalance.size(); i++) {
+            if (user.equalsIgnoreCase(username.get(i)) && pass.equals(password.get(i)))
+                for (String n : transactionHistory.get(i)){
+                    System.out.println(n);
+                }
+            }
+
+    }
 
     //This method allows for the correct balance to be shown for the corresponding account
     //totalBalance.get(0) == username.get(0) and so on
@@ -124,23 +143,9 @@ public class UserAccount{
             if(user.equalsIgnoreCase(username.get(i)) && pass.equals(password.get(i))){
                 userBalance = totalBalance.get(i);
                 System.out.printf(user.substring(0,1).toUpperCase() + user.substring(1) + " your current balance is: $%.2f \n", userBalance);
-              	transactions.add("Check balance: $" + userBalance);
                 break;
             }
         }
     }
 
-    // This method prints the history of all transactions made on a specific account.
-
-	public void printLog() 
-    {
-       String userTransactions;
-     System.out.println("Your transactions:");
-      for (int i= 0; i< transactions.size();i++ )
-         {
-            userTransactions = transactions.get(i);
-      System.out.println(userTransactions);
-      
-         }  
-    }
 }
